@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--Made by Yash NARAIN-->
+<html>
+
+<html onload="console.log('HTML version 1.8.0')">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="Logo.png" type="image/png" sizes="16x16">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" rel="stylesheet">
+</link>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136838212-1"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.js"></script>
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Vex MM">
+  <meta name="theme-color" content="#303F9F">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Vex MM">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+  <script src="/__/firebase/7.14.2/firebase-app.js"></script>
+
+  <script src="/__/firebase/7.14.2/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.14.2/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
+
+  <script>
+    var displayName;
+    var photoURL;
+
+    var firebaseConfig = {
+    apiKey: 'AIzaSyCmIraHDpCzsWAUDogsfC2RTlXtE86vdE8',
+    authDomain: 'innero.firebaseapp.com',
+    databaseURL: 'https://innero.firebaseio.com',
+    storageBucket: 'innero.appspot.com'
+  };
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        displayName = user.displayName;
+        photoURL = user.photoURL;
+        document.getElementById('listFor').innerHTML += '<li><a href="../write">Write</a></li>'
+        document.getElementById('urUser').innerHTML =
+          '<li><p><a><img id="userImg" style="height:4vh;margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></img><a id="name" style="margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></a></a></p></li>'
+          document.getElementById('userImg').src = user.photoURL;
+      } else {
+      }
+    });
+
+    function logOut() {
+      firebase.auth().signOut();
+    }
+  </script>
+
+
+</head>
+
+<style>
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  .jumbotron {
+    color: #ffffff;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .fullScreen {
+    height: 100vh;
+    width: 100vw;
+  }
+  .makeBold {
+    font-weight: bold;
+  }
+
+  .someImg {
+    border-radius: 5px 5px 0 0;
+    width: 100%
+
+  }
+
+
+  .cardy {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 30%;
+    border-radius: 5px;
+    margin-bottom: 5vh;
+  }
+
+  .cardy:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .containery {
+    padding-top:1vh;
+    padding-bottom: 1vh;
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+
+
+
+</style>
+<script>
+  $(document).ready(function() {
+    // Add smooth scrolling to all links
+    $("a").on('click', function(event) {
+
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function() {
+
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
+</script>
+
+<body>
+  <nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Take Your Stand</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav" id="listFor">
+          <li><a href="../">Home</a></li>
+          <li><a href="../read">Read</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" id="urUser">
+          <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+        </ul>
+      </div>
+  </nav>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
+          <h4 class="modal-title">Log In</h4>
+        </div>
+        <div class="modal-body">
+          <button type="button" class="btn btn-danger" onclick="googleLogin()">Log in with Google</button>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function googleLogin() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          document.getElementById('listFor').innerHTML += '<li><a href="../write">Write</a></li>'
+          document.getElementById('urUser').innerHTML =
+            '<li><p><a><img id="userImg" style="height:4vh;margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></img><a id="name" style="margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></a></a></p></li>'
+          document.getElementById('userImg').src = user.photoURL;
+          document.getElementById('close').click();
+        } else {
+          firebase.auth().signInWithPopup(provider);
+        }
+      });
+    }
+  </script>
+  <div class="fullScreen text-center" style="padding-top:10vh">
+    <center>
+      <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for Stories" style="width:45vw">
+      <div id="bigCont" style="margin-top: 5vh">
+    </div>
+    </center>
+
+  </div>
+
+
+
+
+
+  <style>
+    footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 6vh;
+      color: #00e6b8
+    }
+  </style>
+
+
+  <script src="/__/firebase/7.14.4/firebase-app.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-auth.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-storage.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-messaging.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-firestore.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-performance.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="read.js"></script>
+
+
+
+
+</body>
+
+</html>
