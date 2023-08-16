@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--Made by Yash NARAIN-->
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="Logo.png" type="image/png" sizes="16x16">
+  <title>Take Your Stand</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+  <script defer src="/__/firebase/7.14.0/firebase-app.js"></script>
+  <script defer src="/__/firebase/7.14.0/firebase-auth.js"></script>
+  <script defer src="/__/firebase/7.14.0/firebase-database.js"></script>
+  <script defer src="/__/firebase/7.14.0/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/7.14.0/firebase-storage.js"></script>
+  <script defer src="/__/firebase/init.js"></script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.js"></script>
+
+</head>
+
+<style>
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  .jumbotron {
+    color: #ffffff;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .fullScreen {
+    height: 100vh;
+  }
+</style>
+<script>
+  $(document).ready(function() {
+    // Add smooth scrolling to all links
+    $("a").on('click', function(event) {
+
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function() {
+
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  });
+</script>
+<script>
+  var displayName;
+  var photoURL;
+
+  var firebaseConfig = {
+    apiKey: 'AIzaSyCmIraHDpCzsWAUDogsfC2RTlXtE86vdE8',
+    authDomain: 'innero.firebaseapp.com',
+    databaseURL: 'https://innero.firebaseio.com',
+    storageBucket: 'innero.appspot.com'
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      displayName = user.displayName;
+      photoURL = user.photoURL;
+      document.getElementById('urUser').innerHTML =
+        '<li><p><a><img id="userImg" style="height:4vh;margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></img><a id="name" style="margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></a></a></p></li>'
+        document.getElementById('userImg').src = user.photoURL;
+    } else {
+    }
+  });
+
+  function logOut() {
+    firebase.auth().signOut();
+  }
+</script>
+
+<body>
+  <nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Take Your Stand</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav" id="listFor">
+          <li><a href="#">Home</a></li>
+          <li><a href="../read">Read</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" id="urUser">
+          <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+        </ul>
+      </div>
+  </nav>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
+          <h4 class="modal-title">Log In</h4>
+        </div>
+        <div class="modal-body">
+          <button type="button" class="btn btn-danger" onclick="googleLogin()">Log in with Google</button>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+      <div id="myModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">User Settings</h4>
+            </div>
+            <div class="modal-body">
+              <center>
+                <button type="button" class="btn btn-default" onclick="logOut()">Log Out</button>
+              </center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function googleLogin() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          document.getElementById('listFor').innerHTML += '<li><a href="../write">Write</a></li>'
+          document.getElementById('urUser').innerHTML = '<li><p><a><img id="userImg" style="height:4vh;margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></img><a id="name" style="margin-bottom:1vh; margin-left: 1vh; margin-right:1vh"></a></a></p></li>'
+          document.getElementById('userImg').src = user.photoURL;
+          document.getElementById('close').click();
+        } else {
+          firebase.auth().signInWithPopup(provider);
+        }
+      });
+    }
+
+
+  </script>
+
+
+
+
+  <div class="jumbotron text-center" style="background-color:black" id="home">
+    <div style="padding-top:60vh">
+      <h1 style="font-size:8.31;">Take Your Stand</h1>
+      <h1 id="text"></h1>
+    </div>
+  </div>
+  <style>
+    footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 6vh;
+      color: #00e6b8
+    }
+  </style>
+  <div id="about" class="container-fluid text-center fullScreen" style="padding-top: 10vh">
+    <h2>About Take Your Stand</h2>
+
+    <br><br><br>
+    <div class="row">
+      <div class="col-sm-6">
+        <span class="glyphicon glyphicon-align-left"></span>
+        <h4>Read</h4>
+        <p>Read some amazing stories, ideas and speeches spread by the people.</p>
+      </div>
+      <div class="col-sm-6">
+        <span class="glyphicon glyphicon-edit"></span>
+        <h4>Write</h4>
+        <p>Write your own. It could be about something that's affected you, a story, or your viewpoint on a situation. The sky is the limit</p>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <center>
+        <h3 style="margin-top:10vh">Be Heard. Make a change.</h3><br><br>
+      </center>
+      <div style="margin-left: 5vw; margin-right: 5vw"><big>Too long has the voices of the people been oppressed. Too long has the voice of change been hidden, squashed, smothered, in the hope
+      that if you hide it long enough, it might go away. Now, it's time to change. Spread your thoughts, change the world.</big></div>
+    </div>
+  </div>
+
+  <footer class="text-center" style="color: #ffffff; background-color: #000000; margin-top:30vh; padding-bottom:10vh;">
+    <a href="#home" title="To Top">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+    <span class="glyphicon glypicon-copyright-mark"></span>
+    <p> Copyright Yash Narain 2020.</p>
+  </footer>
+
+
+  <script>
+    var app = document.getElementById('text');
+
+    var typewriter = new Typewriter(app, {
+      loop: true
+    });
+
+    typewriter.typeString('Against Racism')
+      .pauseFor(2500)
+      .deleteChars(6)
+      .typeString('Gender Inequality')
+      .pauseFor(2500)
+      .deleteAll()
+      .typeString('For Equality')
+      .pauseFor(2500)
+      .deleteChars(8)
+      .typeString('Humanity')
+      .pauseFor(2500)
+      .deleteChars(8)
+      .typeString('A Better World')
+      .pauseFor(2500)
+      .start();
+  </script>
+
+</body>
+
+</html>
